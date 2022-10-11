@@ -13,3 +13,58 @@ beforeEach(async () => {
       .deploy({data: bytecode})
       .send({gas: "1000000", from: accounts[0]})
 })
+
+describe("Lottery Contract", () => {
+  it("Deploys the contract", () => {
+    assert.ok(lottery.options.address)
+  })
+  
+  it("allows one account entry", async () => {
+    await lottery.methods.enter().send({
+      from: accounts[0],
+      value: web3.utils.toWei("0.0001", "ether")
+    })
+    const players = await lottery.methods.getPlayers().call({from: accounts[0]})
+    assert.equal(1, players.length)
+    assert.equal(accounts[0], players[0])
+  })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
