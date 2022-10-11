@@ -4,6 +4,11 @@ contract Lottery {
     address public manager;
     address[] public players;
     
+    modifier restricted() {
+        require(msg.sender == manager);
+        _;
+    }
+    
     function Lottery() public {
         manager = msg.sender;
     }
@@ -17,8 +22,9 @@ contract Lottery {
         return uint(keccak256(block.difficulty, now, players));
     }
     
-    function pickWinner() public {
+    function pickWinner() public restricted {
         uint index = random() % players.length;
         players[index].transfer(this.balance);
+        players = new address[](0);
     }
 }
