@@ -29,7 +29,7 @@ describe("Lottery Contract", () => {
     assert.equal(accounts[0], players[0])
   })
   
-  it("allows one account entry", async () => {
+  it("allows multiple accounts entry", async () => {
     await lottery.methods.enter().send({
       from: accounts[0],
       value: web3.utils.toWei("0.0001", "ether")
