@@ -9,6 +9,16 @@ contract Lottery {
     }
     
     function enter() public payable {
+        require(msg.value > 0.00001 ether);
         players.push(msg.sender);
+    }
+    
+    function random() private view returns(uint) {
+        return uint(keccak256(block.difficulty, now, players));
+    }
+    
+    function pickWinner() public {
+        uint index = random() % players.length;
+        players[index].transfer(this.balance);
     }
 }
